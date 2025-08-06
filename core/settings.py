@@ -66,22 +66,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://ck-backend-amber.vercel.app"
+
+
+# 1. Orígenes permitidos (en producción NUNCA uses '*' o localhost)
+CORS_ALLOWED_ORIGINS = [
+    "https://tudominio.com",
+    "https://www.tudominio.com",
+    # Opcional: otros dominios que consuman tu API (ej: dashboard.tudominio.com)
 ]
 
-# Eliminar esta definición duplicada y obsoleta
-# CORS_ALLOWED_ORIGINS = [
-#     "https://tudominio.com",
-#     "https://www.tudominio.com",
-#     # Opcional: otros dominios que consuman tu API (ej: dashboard.tudominio.com)
-# ]
-
+# 2. Deshabilitar permitir todos los orígenes (¡CRUCIAL en producción!)
 # Configuración CORS para desarrollo y producción
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
 
-# En producción, esto debe ser False
-CORS_ALLOW_ALL_ORIGINS = False
+# En producción, asegúrate de que esto sea False
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Solo será True en desarrollo
 
 CORS_ALLOW_CREDENTIALS = True  # Si usas cookies/auth
 
