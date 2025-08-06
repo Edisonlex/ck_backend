@@ -138,8 +138,14 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Configuración para archivos estáticos
+STATIC_URL = '/static/'  # URL base para archivos estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Carpeta donde se recolectarán los archivos estáticos en producción
 
-STATIC_URL = 'static/'
+# Directorios adicionales donde Django buscará archivos estáticos (aparte de los de cada app)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Carpeta "static" en la raíz del proyecto
+]
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
