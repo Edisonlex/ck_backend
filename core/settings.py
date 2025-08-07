@@ -1,26 +1,21 @@
 from pathlib import Path
 import os
-
-# Importar python-dotenv para cargar variables de entorno
-from dotenv import load_dotenv
-
-# Cargar variables de entorno desde .env
-load_dotenv()
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-xf$+0c#ba@e9s5=3v1a&ms^_5lnx&w2c@)-52-g45@u$@uh)uc')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,.vercel.app').split(',')
-
+# Security settings
+SECRET_KEY = 'django-insecure-xf$+0c#ba@e9s5=3v1a&ms^_5lnx&w2c@)-52-g45@u$@uh)uc'
+DEBUG = False
+ALLOWED_HOSTS = [
+    '.vercel.app',
+    '.now.sh',
+    '127.0.0.1',
+    'localhost',
+]
 
 # Application definition
-
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,28 +45,16 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-
-# Configuración para archivos multimedia (imágenes subidas)
-MEDIA_URL = '/media/'  # URL pública para acceder a los archivos
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Ruta absoluta del sistema de archivos
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-# Configuración CORS para desarrollo (ajusta para producción)
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
-
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Solo en desarrollo
-
-CORS_ALLOW_CREDENTIALS = True  # Si usas cookies/auth
 
 ROOT_URLCONF = 'core.urls'
 
@@ -92,27 +75,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# Database configuration
+DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://neondb_owner:npg_8jzynedUp4tm@ep-late-math-acx4o848-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+    )
+}
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Configuración de base de datos usando variables de entorno
-if os.environ.get('DATABASE_URL'):
-    # Si existe DATABASE_URL, usar dj-database-url para configurar
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-    }
-else:
-    # Configuración por defecto (SQLite)
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('DATABASE_ENGINE', 'django.db.backends.sqlite3'),
-            'NAME': os.environ.get('DATABASE_NAME', BASE_DIR / 'db.sqlite3'),
-        }
-    }
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://192.168.56.1:3000",
+    "https://ck-frontend-one.vercel.app"
+]
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -128,26 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+# Internationalization
 LANGUAGE_CODE = 'es'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Configuración para archivos estáticos
-STATIC_URL = '/static/'  # URL base para archivos estáticos
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Carpeta donde se recolectarán los archivos estáticos en producción
-
-# Directorios adicionales donde Django buscará archivos estáticos (aparte de los de cada app)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Carpeta "static" en la raíz del proyecto
-]
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
