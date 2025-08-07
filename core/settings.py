@@ -1,5 +1,5 @@
-from pathlib import Path
 import os
+from pathlib import Path
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -10,7 +10,6 @@ SECRET_KEY = 'django-insecure-xf$+0c#ba@e9s5=3v1a&ms^_5lnx&w2c@)-52-g45@u$@uh)uc
 DEBUG = False
 ALLOWED_HOSTS = [
     '.vercel.app',
-    '.now.sh',
     '127.0.0.1',
     'localhost',
 ]
@@ -47,6 +46,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'VercelDeploy.wsgi.app'
 
 # Database configuration
 DATABASES = {
@@ -86,12 +86,13 @@ DATABASES = {
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Configuración para Vercel
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
+
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
