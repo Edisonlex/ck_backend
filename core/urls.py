@@ -3,14 +3,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-    return JsonResponse({
-        'status': 'ok',
-        'message': 'API de Fundación CK funcionando correctamente',
-        'endpoints': [
-            '/api/',
-            '/admin/'
-        ]
-    })
 
 urlpatterns = [
     path('admin/', admin.site.urls),
