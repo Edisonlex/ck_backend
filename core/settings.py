@@ -104,7 +104,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://ck-frontend-one.vercel.app",
     
 ]
-CORS_ALLOWED_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
