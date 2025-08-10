@@ -16,6 +16,7 @@ api_patterns = [
     path('', include('apps.contacto.urls')),
     path('', include('apps.whatsapp.urls')),
     path('', include('apps.cursos.urls')),
+    path('', include('apps.profesores.urls')),
 ]
 
 urlpatterns = [

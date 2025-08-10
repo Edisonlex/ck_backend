@@ -40,6 +40,7 @@ LOCAL_APPS = [
     'apps.contacto',
     'apps.whatsapp',
     'apps.cursos',
+    'apps.profesores',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
